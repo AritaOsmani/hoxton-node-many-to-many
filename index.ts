@@ -323,6 +323,7 @@ app.patch('/interviewers/:id', (req, res) => {
 
 })
 
+
 app.patch('/interviews/:id', (req, res) => {
     const id = req.params.id;
     const { applicantId, interviewerId, date, score } = req.body;
@@ -351,7 +352,7 @@ app.patch('/interviews/:id', (req, res) => {
             const applicant = getApplicantById.get(applicantId)
             const interviewer = getInterviewersById.get(interviewerId)
 
-            if (applicant && interviewer) {
+            if (applicant && applicantId || interviewer && interviewerId || applicant && applicantId && interviewer && interviewerId) {
                 const result = updateInterview.run(applicantId ?? match.applicantId, interviewerId ?? match.interviewerId, date ?? match.date, score ?? match.score, id);
                 const updated = getInterviewsById.get(id)
                 res.send(updated)
